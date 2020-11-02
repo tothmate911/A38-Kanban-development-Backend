@@ -1,4 +1,5 @@
 # A38-Kanban-development
+The demo version of the apllication is available here: http://a38-kanban.herokuapp.com/.
 
 ## Description
 This application is a kanban board. The board displays gitlab issue cards, showing the title,
