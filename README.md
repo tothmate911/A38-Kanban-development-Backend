@@ -1,4 +1,5 @@
 # A38-Kanban-development
+For the demo of the app please visit: http://a38-kanban.herokuapp.com/.
 
 ## Description
 This application is a kanban board. The board displays gitlab issue cards, showing the title,
@@ -22,7 +23,7 @@ We use the web application flow as described here: https://docs.gitlab.com/ee/ap
 We use graphQL API to get datas from gitlab and modify them (https://docs.gitlab.com/ee/api/graphql/).
 
 This is the backend of the application, which is a Spring application. The frontend is written React.  
-This is the frontend remote repository: https://github.com/CsapoKrisztian/A38-Kanban-development-Frontend.
+This is the frontend remote repository: https://github.com/tothmate911/A38-Kanban-development-Frontend.
 
 ## Configuration
 
