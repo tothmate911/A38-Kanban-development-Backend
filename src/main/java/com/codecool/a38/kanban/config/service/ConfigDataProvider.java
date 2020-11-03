@@ -32,7 +32,7 @@ public class ConfigDataProvider {
 
     private Map<String, PriorityDisplayNum> priorityTitleDisplayNumMap = new HashMap<>();
 
-    private final String configJsonFilePath = "/configprops.json";
+    private final String configJsonFilePath = "/configprops-dist.json";
 
     @PostConstruct
     public void init() {
