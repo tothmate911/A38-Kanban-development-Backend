@@ -5,7 +5,7 @@
 
 György Noémi,
 Hegedüs Enikő,
-Tóth Lajos Máté
+Tóth Máté
 
 ### Project Management:
 
