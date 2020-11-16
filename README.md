@@ -13,6 +13,7 @@ Csapó Krisztián,
 Csürke Gábor
 
 ## Description
+
 This application is a kanban board. The board displays gitlab issue cards, showing the title,
 assignee, project, story, milestone, priority of the issue, and some other information.  
 The columns of the board are the statuses of the issues.
@@ -35,6 +36,17 @@ We use graphQL API to get datas from gitlab and modify them (https://docs.gitlab
 
 This is the backend of the application, which is a Spring application. The frontend is written React.  
 This is the frontend remote repository: https://github.com/tothmate911/A38-Kanban-development-Frontend.
+
+## Usage
+
+For instant usage of the application please go to the following page:
+[http://a38-kanban.herokuapp.com](http://a38-kanban.herokuapp.com)
+
+After the auto-redirecting to Gitlab authentication platform give these credentials:
+
+e-mail: gitlab_guest@indamail.hu
+
+password: guestPassword00
 
 ## Configuration
 
