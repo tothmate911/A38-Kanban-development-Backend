@@ -41,13 +41,14 @@ public class DataManager {
      * Since the API restricts the number of nodes that can be received from it, a nested pagination is used.
      * The outer pagination paginates over the projects,
      * and if it is necessary for a particular project, then inner pagination paginates over the issues of that project.
-     * @param token             the token that is used in request to gitlab API for the authentication
-     * @param projectIds        the project ids by which the issues are filtered.
-     * @param milestoneTitles   the milestone titles by which the issues are filtered.
-     *                          If no milestone titles are given, then this filter is ignored.
-     * @param storyTitles       the story titles by which the issues are filtered.
-     *                          If no story titles titles are given, then this filter is ignored.
-     * @return                  the map containing the issues in an ordered way
+     *
+     * @param token           the token that is used in request to gitlab API for the authentication
+     * @param projectIds      the project ids by which the issues are filtered.
+     * @param milestoneTitles the milestone titles by which the issues are filtered.
+     *                        If no milestone titles are given, then this filter is ignored.
+     * @param storyTitles     the story titles by which the issues are filtered.
+     *                        If no story titles titles are given, then this filter is ignored.
+     * @return the map containing the issues in an ordered way
      */
     public Map<String, AssigneeIssues> getAssigneeIdIssuesMap(String token, Set<String> projectIds,
                                                               Set<String> milestoneTitles, Set<String> storyTitles) {
@@ -89,13 +90,14 @@ public class DataManager {
      * Since the API restricts the number of nodes that can be received from it, a nested pagination is used.
      * The outer pagination paginates over the projects,
      * and if it is necessary for a particular project, then inner pagination paginates over the issues of that project.
-     * @param token             the token that is used in request to gitlab API for the authentication
-     * @param projectIds        the project ids by which the issues are filtered.
-     * @param milestoneTitles   the milestone titles by which the issues are filtered.
-     *                          If no milestone titles are given, then this filter is ignored.
-     * @param storyTitles       the story titles by which the issues are filtered.
-     *                          If no story titles titles are given, then this filter is ignored.
-     * @return                  the map containing the issues in an ordered way
+     *
+     * @param token           the token that is used in request to gitlab API for the authentication
+     * @param projectIds      the project ids by which the issues are filtered.
+     * @param milestoneTitles the milestone titles by which the issues are filtered.
+     *                        If no milestone titles are given, then this filter is ignored.
+     * @param storyTitles     the story titles by which the issues are filtered.
+     *                        If no story titles titles are given, then this filter is ignored.
+     * @return the map containing the issues in an ordered way
      */
     public Map<String, StoryIssues> getStoryIdIssuesMap(String token, Set<String> projectIds,
                                                         Set<String> milestoneTitles, Set<String> storyTitles) {
@@ -326,15 +328,18 @@ public class DataManager {
         return storyLabelList;
     }
 
-    public Issue updateStatus(String token, String issueId, String newStatusTitle) {
+    public Issue updateStatus(String token, String issueId, String newStatusTitle, String projectFullPath) {
         IssueNode issueNode = gitLabGraphQLCaller.getIssueResponse(token, issueId).getData().getIssue();
         String issueIid = issueNode.getIid();
-        String projectFullPath = issueNode.getDesignCollection().getProject().getFullPath();
         String currentStatusLabelId = util.getStatusLabelId(issueNode);
-
-        String newStatusLabelId = gitLabGraphQLCaller.
-                getProjectLabelResponse(token, projectFullPath, newStatusTitle)
-                .getData().getProject().getLabel().getId();
+        String newStatusLabelId;
+        try {
+            newStatusLabelId = getNewStatusLabelId(token, newStatusTitle, projectFullPath);
+        } catch (NullPointerException e) {
+            log.error("Could not find status with the title: " + newStatusTitle +
+                    ", please check if this is really a valid status title!");
+            return util.makeIssueFromIssueNode(issueNode);
+        }
 
         if (!currentStatusLabelId.equals(newStatusLabelId)) {
             String currentStatusLabelIdNum = util.getIdNumValue(currentStatusLabelId);
@@ -350,13 +355,27 @@ public class DataManager {
         return util.makeIssueFromIssueNode(issueNode);
     }
 
-    public Issue updateAssignee(String token, String issueId, String newAssigneeId) {
+    private String getNewStatusLabelId(String token, String newStatusTitle, String projectFullPath)
+            throws NullPointerException {
+        String newStatusLabelId;
+        // Actually issues in "Backlog" have no status label.
+        // Therefore if we want to move an issue to Backlog then we only need to remove the current status label.
+        if (newStatusTitle.equals("Backlog") || newStatusTitle.equals("")) {
+            newStatusLabelId = "";
+        } else {
+            newStatusLabelId = gitLabGraphQLCaller.
+                    getProjectLabelResponse(token, projectFullPath, newStatusTitle)
+                    .getData().getProject().getLabel().getId();
+        }
+        return newStatusLabelId;
+    }
+
+    public Issue updateAssignee(String token, String issueId, String newAssigneeId, String projectFullPath) {
         IssueNode issueNode = gitLabGraphQLCaller.getIssueResponse(token, issueId).getData().getIssue();
         String issueIid = issueNode.getIid();
-        String projectFullPath = issueNode.getDesignCollection().getProject().getFullPath();
 
         String assigneeUsername = "";
-        if (!newAssigneeId.equals("unassigned") && !newAssigneeId.equals("")) {
+        if (!newAssigneeId.toLowerCase().equals("unassigned") && !newAssigneeId.equals("")) {
             assigneeUsername = gitLabGraphQLCaller.getUserResponse(token, newAssigneeId)
                     .getData().getUser().getUsername();
         }
