@@ -46,4 +46,5 @@ public class Issue implements Comparable<Issue> {
         if (otherIssue.priority == null) return -1;
         return this.priority.getPriorityNum() - otherIssue.priority.getPriorityNum();
     }
+
 }
