@@ -145,7 +145,7 @@ public class GitLabGraphQLCaller {
 
     public ProjectsDataResponse getProjectsResponse(String token, String endCursor) {
         String query = "{\"query\":\"{\\n" +
-                "  projects" + util.getFormattedPaginationWithBrackets(endCursor) + " {\\n" +
+                "  projects (membership: true, " + util.getFormattedPaginationWithBrackets(endCursor) + ") {\\n" +
                 "    nodes {\\n" +
                 "      id\\n" +
                 "      fullPath\\n" +
