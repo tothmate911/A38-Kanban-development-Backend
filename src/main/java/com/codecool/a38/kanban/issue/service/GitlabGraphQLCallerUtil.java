@@ -25,7 +25,7 @@ public class GitlabGraphQLCallerUtil {
     }
 
     public String getFormattedPaginationWithBrackets(String cursor) {
-        return !cursor.equals(startPagination) ? "(" + getFormattedAfter(cursor) + ")" : "";
+        return !cursor.equals(startPagination) ? getFormattedAfter(cursor) : "";
     }
 
     private String getFormattedAfter(String cursor) {
