@@ -63,13 +63,14 @@ public class ConfigDataProvider {
         statusDisplayTitles = jsonProperties.getStatuses().stream()
                 .map(LabelProperty::getDisplay)
                 .collect(Collectors.toList());
-        log.info("Status titles loaded from config Json: " + statusDisplayTitles.toString());
+        log.info("Status titles loaded from config Json: " + statusDisplayTitles);
     }
 
     /**
      * The status label titles and the given corresponding display titles are put in a map.
      * This map is a LinkedHashMap ot maintain the order of the statuses.
-     * @param jsonProperties    the json properties containing the config data
+     *
+     * @param jsonProperties the json properties containing the config data
      */
     private void setStatusTitleDisplayMap(JsonProperties jsonProperties) {
         jsonProperties.getStatuses().forEach(status -> statusTitleDisplayMap
@@ -81,7 +82,8 @@ public class ConfigDataProvider {
      * The priority label titles and the given corresponding display titles are put in a map.
      * A priority number is added to each priority, which corresponds to their order in the config file.
      * This priority number will be later used to sort issues.
-     * @param jsonProperties    the json properties containing the config data
+     *
+     * @param jsonProperties the json properties containing the config data
      */
     private void setPriorityTitleDisplayNumMap(JsonProperties jsonProperties) {
         int serial = 0;
