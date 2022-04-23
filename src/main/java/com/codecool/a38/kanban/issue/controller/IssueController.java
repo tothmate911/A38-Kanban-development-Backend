@@ -22,7 +22,7 @@ public class IssueController {
 
     @PostMapping("/issues/orderByAssignee")
     public Map<String, AssigneeIssues> getAssigneeIssuesList(@CookieValue(defaultValue = "default") String gitlabAccessToken,
-                                                      @RequestBody FilterRequestBody filter) {
+                                                             @RequestBody FilterRequestBody filter) {
         return dataManager.getAssigneeIdIssuesMap(gitlabAccessToken, filter.getProjectIds(),
                 filter.getMilestoneTitles(), filter.getStoryTitles());
     }
