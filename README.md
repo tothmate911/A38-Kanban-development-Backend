@@ -62,7 +62,7 @@ process you should have the following new files in your local computer:
 - A38-Kanban-development/docker-compose.yml
 - A38-Kanban-development/src/main/resources/configprops.json
 
-For only testing purposes you can use our test gitlab server (https://gitlab.techpm.guru)
+For only testing purposes you can use our test environment on gitlab.com.
 with the current configurations
 (which means you can skip the part below that describes the configurations for your gitlab server).  
 In this case you can use the following credentials at the login part:  
@@ -99,7 +99,7 @@ services:
       - '8080:8080'
     environment:
       - frontend.url=http://localhost:3000    #This should be your frontend url
-      - gitlabServer.url=https://gitlab.techpm.guru   #This should be your gitlab server url      
+      - gitlabServer.url=https://gitlab.com   #This should be your gitlab server url      
   frontend:
     image: kanban-frontend:latest
     build:
@@ -108,7 +108,7 @@ services:
     ports:
       - '3000:3000'   #You can set the port here
     environment:
-      - REACT_APP_GITLAB_SERVER=https://gitlab.techpm.guru    #This should be your gitlab server url
+      - REACT_APP_GITLAB_SERVER=https://gitlab.com    #This should be your gitlab server url
       - REACT_APP_GITLAB_APP_ID=458f27c6eb357cf7419231331e3af3e3a9d39782b7edf50ac2cc083e7a7f1a4a    #This should be your gitlab application id
       - REACT_APP_GITLAB_APP_SECRET=f0fbf238c1ef5d0be56bf1118c430b15daff2b85d790d4bbfd76b8ccbb5bac33    #This should be your gitlab application secret
       - REACT_APP_APPLICATION=http://localhost:3000   #This should be your frontend url

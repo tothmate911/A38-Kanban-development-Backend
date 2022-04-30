@@ -9,7 +9,7 @@ services:
       - '8080:8080'
     environment:
       - frontend.url=http://localhost:3000
-      - gitlabServer.url=https://gitlab.techpm.guru
+      - gitlabServer.url=https://gitlab.com
   frontend:
     image: kanban-frontend:latest
     build:
@@ -18,8 +18,8 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - REACT_APP_GITLAB_SERVER=https://gitlab.techpm.guru
-      - REACT_APP_GITLAB_APP_ID=458f27c6eb357cf7419231331e3af3e3a9d39782b7edf50ac2cc083e7a7f1a4a
-      - REACT_APP_GITLAB_APP_SECRET=f0fbf238c1ef5d0be56bf1118c430b15daff2b85d790d4bbfd76b8ccbb5bac33
+      - REACT_APP_GITLAB_SERVER=https://gitlab.com
+      - REACT_APP_GITLAB_APP_ID=fb5719d5cb6621374b28c03ce5c59cdcc79713b31c636216694dae247787bcf3
+      - REACT_APP_GITLAB_APP_SECRET=6456ed6cc7c7be3c9b90e2bf9e6075372dbcd4cfbc980fbc246ebc60b7e6d85f
       - REACT_APP_APPLICATION=http://localhost:3000
     stdin_open: true
