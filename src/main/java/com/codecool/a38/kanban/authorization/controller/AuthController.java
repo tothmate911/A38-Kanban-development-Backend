@@ -31,10 +31,10 @@ public class AuthController {
      * After that the token is put into an HTTP only cookie and the cookie is added to the response.
      * The cookie's max age is set either to the token's expiration time (if it exists) or one week.
      *
-     * @param response
+     * @param response the HttpServletResponse
      * @param code     the code received in query parameter
-     * @param appData
-     * @return
+     * @param appData  the body that contains appId, appSecret, redirectUri
+     * @return information about the result
      */
     @PostMapping("/getToken")
     public ResponseEntity<String> getToken(HttpServletResponse response, @RequestParam String code,
@@ -47,10 +47,10 @@ public class AuthController {
                 "&redirect_uri=" + appData.getRedirectUri();
 
         HttpEntity<String> request = new HttpEntity<>(null);
-        log.info("before postForEntity, url=<" + gitlabServerOauthTokenUrl + parameters + ">");
-        OAuthResponse oAuthResponse = restTemplate.postForEntity(gitlabServerOauthTokenUrl + parameters,
+        String urlWithParameters = gitlabServerOauthTokenUrl + parameters;
+        log.debug("Sending request for authentication token: urlWithParameters=<" + urlWithParameters + ">");
+        OAuthResponse oAuthResponse = restTemplate.postForEntity(urlWithParameters,
                 request, OAuthResponse.class).getBody();
-        log.info("after postForEntity, oAuthResponse=<" + oAuthResponse + ">");
         if (oAuthResponse != null) {
             String gitlabAccessToken = oAuthResponse.getAccess_token();
             log.info("gitlab access token received from gitlab: " + gitlabAccessToken);
@@ -68,7 +68,7 @@ public class AuthController {
             return ResponseEntity.ok("accessToken saved in cookie: " + gitlabAccessToken);
 
         } else {
-            log.info("No oauth response returned");
+            log.warn("No oauth response returned");
             return ResponseEntity.ok("OAuthResponse not returned");
         }
     }
