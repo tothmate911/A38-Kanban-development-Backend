@@ -36,6 +36,7 @@ public class AuthController {
      * @param appData  the body that contains appId, appSecret, redirectUri
      * @return information about the result
      */
+    @CrossOrigin(origins = "https://a38-gitlab-kanban.herokuapp.com/", allowCredentials = "true")
     @PostMapping("/getToken")
     public ResponseEntity<String> getToken(HttpServletResponse response, @RequestParam String code,
                                            @RequestBody AppData appData) {
@@ -64,8 +65,12 @@ public class AuthController {
             cookie.setMaxAge(maxAge);
             cookie.setSecure(true);
 
-//            cookie.setHttpOnly(true);
+            cookie.setHttpOnly(true);
             cookie.setPath("/");
+            response.setHeader("Access-Control-Allow-Origin", "https://a38-gitlab-kanban.herokuapp.com");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type, *");
             response.addCookie(cookie);
 
             return ResponseEntity.ok("accessToken saved in cookie: " + gitlabAccessToken);
