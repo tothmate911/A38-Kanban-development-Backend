@@ -30,8 +30,9 @@ public class AuthController {
      * as described in gitlab's Web application OAuth2 flow (https://docs.gitlab.com/ee/api/oauth2.html).
      * After that the token is put into an HTTP only cookie and the cookie is added to the response.
      * The cookie's max age is set either to the token's expiration time (if it exists) or one week.
+     *
      * @param response
-     * @param code      the code received in query parameter
+     * @param code     the code received in query parameter
      * @param appData
      * @return
      */
@@ -46,8 +47,10 @@ public class AuthController {
                 "&redirect_uri=" + appData.getRedirectUri();
 
         HttpEntity<String> request = new HttpEntity<>(null);
+        log.info("before postForEntity, url=<" + gitlabServerOauthTokenUrl + parameters + ">");
         OAuthResponse oAuthResponse = restTemplate.postForEntity(gitlabServerOauthTokenUrl + parameters,
                 request, OAuthResponse.class).getBody();
+        log.info("after postForEntity, oAuthResponse=<" + oAuthResponse + ">");
         if (oAuthResponse != null) {
             String gitlabAccessToken = oAuthResponse.getAccess_token();
             log.info("gitlab access token received from gitlab: " + gitlabAccessToken);
