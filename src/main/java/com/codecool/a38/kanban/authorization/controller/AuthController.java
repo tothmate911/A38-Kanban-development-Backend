@@ -19,7 +19,7 @@ public class AuthController {
     @Value("${gitlabServer.url}")
     private String gitlabServerUrl;
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public AuthController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -36,7 +36,6 @@ public class AuthController {
      * @param appData  the body that contains appId, appSecret, redirectUri
      * @return information about the result
      */
-    @CrossOrigin(origins = "https://a38-gitlab-kanban.herokuapp.com/", allowCredentials = "true")
     @PostMapping("/getToken")
     public ResponseEntity<String> getToken(HttpServletResponse response, @RequestParam String code,
                                            @RequestBody AppData appData) {
@@ -55,22 +54,16 @@ public class AuthController {
         if (oAuthResponse != null) {
             String gitlabAccessToken = oAuthResponse.getAccess_token();
             log.info("gitlab access token received from gitlab: " + gitlabAccessToken);
-            log.info("oAuthResponse: " + oAuthResponse);
 
             Cookie cookie = new Cookie("gitlabAccessToken", gitlabAccessToken);
 
             int weekInSeconds = 60 * 60 * 24 * 7;
             int maxAge = oAuthResponse.getExpires_in() != null ? oAuthResponse.getExpires_in() : weekInSeconds;
-            log.info("oAuthResponse.getExpires_in()=<" + oAuthResponse.getExpires_in() + ">, maxAge=<" + maxAge + ">");
             cookie.setMaxAge(maxAge);
-            cookie.setSecure(true);
 
+            cookie.setSecure(true);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
-            response.setHeader("Access-Control-Allow-Origin", "https://a38-gitlab-kanban.herokuapp.com");
-            response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type, *");
             response.addCookie(cookie);
 
             return ResponseEntity.ok("accessToken saved in cookie: " + gitlabAccessToken);
