@@ -26,7 +26,7 @@ be shown, even possibly those which do not have a story or/and milestone.
 The gitlab page of the issues can be reached by clicking on the gitlab logo on the issues. The statuses and the
 assignees of issues can be directly changed from the board by the drag and drop function of the issues.
 
-Our application uses the OAuth2 protocol to access GitLab resources on the user’s behalf. We use the web application
+Our application uses the OAuth2 protocol to access GitLab resources on the user’s behalf. We use the Authorization code
 flow as described here: https://docs.gitlab.com/ee/api/oauth2.html.
 
 We use graphQL API to get datas from gitlab and modify them (https://docs.gitlab.com/ee/api/graphql/).
@@ -36,56 +36,37 @@ This is the frontend remote repository: https://github.com/tothmate911/A38-Kanba
 
 ## Usage
 
-For instant usage of the application please go to the following page:
-[http://a38-kanban.herokuapp.com](http://a38-kanban.herokuapp.com)
+For instant test usage of the application please go to the following page:
+https://a38-kanban.herokuapp.com
 
 After the auto-redirecting to Gitlab authentication platform give these credentials:
 
-e-mail: gitlab_guest@indamail.hu
+* e-mail: tothmate316
+* password: kanban1!
 
-password: guestPassword00
+If you are asked to Authorize the configured GitLab Application to use the account, then please authorize it.
+
+(Please note that you will not be able to assign an issue to a user who is not a member of the issue's project.)
 
 ## Configuration
 
 Clone this repository and the frontend repository to your local computer. Make sure that the two downloaded directories
 are on the same level.
 
-Please find the following files:
-
-- A38-Kanban-development/docker-compose-dist.yml
-- A38-Kanban-development/src/main/resources/configprops-dist.json
-
-These are sample config files. Make a copy of each of these files in the same directory where they are. Rename these new
-files, so that their new name is the same as the old, except that they don't contain the text: "-dist". After this
-process you should have the following new files in your local computer:
-
-- A38-Kanban-development/docker-compose.yml
-- A38-Kanban-development/src/main/resources/configprops.json
-
-For only testing purposes you can use our test environment on gitlab.com.
-with the current configurations
-(which means you can skip the part below that describes the configurations for your gitlab server).  
-In this case you can use the following credentials at the login part:  
-username or email: tothmate911@gmail.com  
-password: tothmate911
-
 ### Configurations for your gitlab server
 
-If you want to use the application with your own gitlab server, please follow the steps described in this part.
+First you need to add a new application to GitLab. You may add the application to your own GitLab server, or you can
+create an application here: https://gitlab.com/-/profile/applications
 
-First you need to add a new application to your gitlab server.
-
-- Go to your gitlab server -> Settings -> Applications.
 - The Redirect URI should be this: <your_frontend_url>/getToken.  
-  (The current configuration uses this Redirect URI: http://localhost:3000/getToken.)
+  (For example: https://a38-kanban.herokuapp.com/getToken)
 - The scopes of the application should be api.
-- Save your application.
-- Now you should be able to see your Application ID and Secret, which you will need later.
+- After creating the application you should be able to see your Application ID and Secret, which you will need later.
 
-Now please go to the configuration files, that you created previously, and in each one set the parameters that are
-listed below them respectively, as described in the following section:
 
 ##### A38-Kanban-development/docker-compose.yml
+Please find this file: A38-Kanban-development/docker-compose.yml.
+Set the appropriate parameters, as described the following section:
 
 ```yaml
 version: '3'
