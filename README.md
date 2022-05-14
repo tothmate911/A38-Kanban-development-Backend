@@ -1,5 +1,7 @@
 # A38-Kanban-development
 
+![image](https://user-images.githubusercontent.com/55543332/168425693-72b469b5-8c11-4abf-9740-681382e2522e.png)
+
 ## Contributors:
 
 ### Developer team:
