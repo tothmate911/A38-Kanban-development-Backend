@@ -43,8 +43,8 @@ https://a38-kanban.herokuapp.com
 
 After the auto-redirecting to Gitlab authentication platform give these credentials:
 
-* e-mail: tothmate316
-* password: kanban1!
+* Username: tothmate316
+* Password: kanban1!
 
 If you are asked to Authorize the configured GitLab Application to use the account, then please authorize it.
 
