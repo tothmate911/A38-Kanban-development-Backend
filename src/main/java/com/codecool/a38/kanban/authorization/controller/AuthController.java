@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class AuthController {
 
+    private static final int WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
     @Value("${gitlabServer.url}")
     private String gitlabServerUrl;
 
@@ -57,8 +58,7 @@ public class AuthController {
 
             Cookie cookie = new Cookie("gitlabAccessToken", gitlabAccessToken);
 
-            int weekInSeconds = 60 * 60 * 24 * 7;
-            int maxAge = oAuthResponse.getExpires_in() != null ? oAuthResponse.getExpires_in() : weekInSeconds;
+            int maxAge = oAuthResponse.getExpires_in() != null ? oAuthResponse.getExpires_in() : WEEK_IN_SECONDS;
             cookie.setMaxAge(maxAge);
 
             cookie.setSecure(true);
