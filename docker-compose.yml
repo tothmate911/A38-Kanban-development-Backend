@@ -20,6 +20,6 @@ services:
     environment:
       - REACT_APP_GITLAB_SERVER=https://gitlab.com
       - REACT_APP_GITLAB_APP_ID=77266e525b6a85dcba87e67fdb2b157de8e6672be00b609a68be2e02667d63ea
-      - REACT_APP_GITLAB_APP_SECRET=17a57ce28827e805bfda592e2def5ba6952603379d444d737dca0fbf2f5b79ff
+      - REACT_APP_GITLAB_APP_SECRET=087b199144dc123e74ec200c01a0131a7ce69819c69c696bafa7ab6ffcb66a9e
       - REACT_APP_APPLICATION=http://localhost:3000
     stdin_open: true
