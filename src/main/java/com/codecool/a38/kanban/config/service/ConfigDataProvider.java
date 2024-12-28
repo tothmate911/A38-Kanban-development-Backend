@@ -5,11 +5,11 @@ import com.codecool.a38.kanban.config.model.LabelProperty;
 import com.codecool.a38.kanban.config.model.PriorityDisplayNum;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -56,14 +56,14 @@ public class ConfigDataProvider {
 
     private void setStoryPrefix(JsonProperties jsonProperties) {
         storyPrefix = jsonProperties.getStoryPrefix();
-        log.info("Story prefix loaded from config Json: " + storyPrefix);
+        log.info("Story prefix loaded from config Json: {}", storyPrefix);
     }
 
     private void setStatusDisplayTitles(JsonProperties jsonProperties) {
         statusDisplayTitles = jsonProperties.getStatuses().stream()
                 .map(LabelProperty::getDisplay)
                 .collect(Collectors.toList());
-        log.info("Status titles loaded from config Json: " + statusDisplayTitles);
+        log.info("Status titles loaded from config Json: {}", statusDisplayTitles);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ConfigDataProvider {
     private void setStatusTitleDisplayMap(JsonProperties jsonProperties) {
         jsonProperties.getStatuses().forEach(status -> statusTitleDisplayMap
                 .put(status.getTitle(), status.getDisplay()));
-        log.info("Status title display map loaded from config Json: " + statusTitleDisplayMap.toString());
+        log.info("Status title display map loaded from config Json: {}", statusTitleDisplayMap.toString());
     }
 
     /**
@@ -91,7 +91,7 @@ public class ConfigDataProvider {
             priorityTitleDisplayNumMap.put(labelProperty.getTitle(),
                     new PriorityDisplayNum(labelProperty.getDisplay(), serial++));
         }
-        log.info("Priority title display map loaded from config Json: " + priorityTitleDisplayNumMap.toString());
+        log.info("Priority title display map loaded from config Json: {}", priorityTitleDisplayNumMap.toString());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.codecool.a38.kanban;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +28,7 @@ public class KanbanApplication {
     public WebMvcConfigurer CORSConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(frontendUrl)
                         .allowedHeaders("*")

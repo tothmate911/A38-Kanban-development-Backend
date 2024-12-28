@@ -1,5 +1,6 @@
 package com.codecool.a38.kanban.issue.service;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,8 @@ public class GitlabGraphQLCallerUtil {
     @Value("${gitlabServer.url}")
     private String gitlabServerUrl;
 
-
+    @Getter
     private final String startPagination = "start pagination";
-
-    public String getStartPagination() {
-        return startPagination;
-    }
-
 
     public String getFormattedPagination(String cursor) {
         return !cursor.equals(startPagination) ? getFormattedAfter(cursor) : "";
@@ -38,7 +34,7 @@ public class GitlabGraphQLCallerUtil {
         if (milestoneTitles == null) return "";
         String defaultOptionText = "Select milestone";
         milestoneTitles.remove(defaultOptionText);
-        return milestoneTitles.size() != 0 ?
+        return !milestoneTitles.isEmpty() ?
                 "milestoneTitle: " + getFormattedFilter(milestoneTitles) : "";
     }
 

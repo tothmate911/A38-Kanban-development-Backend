@@ -46,12 +46,12 @@ public class DataManager {
      * @param milestoneTitles   the milestone titles by which the issues are filtered.
      *                          If no milestone titles are given, then this filter is ignored.
      * @param storyTitles       the story titles by which the issues are filtered.
-     *                          If no story titles titles are given, then this filter is ignored.
+     *                          If no story titles are given, then this filter is ignored.
      * @return                  the map containing the issues in an ordered way
      */
     public Map<String, AssigneeIssues> getAssigneeIdIssuesMap(String token, Set<String> projectIds,
                                                               Set<String> milestoneTitles, Set<String> storyTitles) {
-        if (projectIds == null || projectIds.size() == 0) return null;
+        if (projectIds == null || projectIds.isEmpty()) return null;
 
         Map<User, List<Issue>> assigneeIssuesMap = new HashMap<>();
         String currentEndCursor = gitLabGraphQLCaller.getStartPagination();
@@ -94,12 +94,12 @@ public class DataManager {
      * @param milestoneTitles   the milestone titles by which the issues are filtered.
      *                          If no milestone titles are given, then this filter is ignored.
      * @param storyTitles       the story titles by which the issues are filtered.
-     *                          If no story titles titles are given, then this filter is ignored.
+     *                          If no story titles are given, then this filter is ignored.
      * @return                  the map containing the issues in an ordered way
      */
     public Map<String, StoryIssues> getStoryIdIssuesMap(String token, Set<String> projectIds,
                                                         Set<String> milestoneTitles, Set<String> storyTitles) {
-        if (projectIds == null || projectIds.size() == 0) return null;
+        if (projectIds == null || projectIds.isEmpty()) return null;
 
         Map<Label, List<Issue>> storyIssuesMap = new HashMap<>();
         String currentEndCursor = gitLabGraphQLCaller.getStartPagination();
@@ -156,7 +156,7 @@ public class DataManager {
             hasNextPage = pageInfo.isHasNextPage();
         } while (hasNextPage);
 
-        log.info("Get single project issue node list: " + projectFullPath);
+        log.info("Get single project issue node list: {}", projectFullPath);
         return issueNodeList;
     }
 
@@ -181,7 +181,7 @@ public class DataManager {
     }
 
     public List<String> getMilestoneTitles(String token, Set<String> projectIds) {
-        if (projectIds == null || projectIds.size() == 0) return null;
+        if (projectIds == null || projectIds.isEmpty()) return null;
 
         Set<String> milestoneTitles = new HashSet<>();
         String currentEndCursor = gitLabGraphQLCaller.getStartPagination();
@@ -238,7 +238,7 @@ public class DataManager {
             currentEndCursor = pageInfo.getEndCursor();
         } while (hasNextPage);
 
-        log.info("Add single project milestone list: " + projectFullPath);
+        log.info("Add single project milestone list: {}", projectFullPath);
         return milestones;
     }
 
@@ -270,12 +270,12 @@ public class DataManager {
             currentEndCursor = pageInfo.getEndCursor();
         } while (hasNextPage);
 
-        log.info("Add single group milestone list: " + groupFullPath);
+        log.info("Add single group milestone list: {}", groupFullPath);
         return milestones;
     }
 
     public List<String> getStoryTitles(String token, Set<String> projectIds) {
-        if (projectIds == null || projectIds.size() == 0) return null;
+        if (projectIds == null || projectIds.isEmpty()) return null;
 
         Set<String> storyTitles = new HashSet<>();
         String currentEndCursor = gitLabGraphQLCaller.getStartPagination();
@@ -322,7 +322,7 @@ public class DataManager {
             hasNextPage = pageInfo.isHasNextPage();
         } while (hasNextPage);
 
-        log.info("Get single project story label list: " + projectFullPath);
+        log.info("Get single project story label list: {}", projectFullPath);
         return storyLabelList;
     }
 
@@ -343,10 +343,10 @@ public class DataManager {
             UpdateIssueDataResponse updateIssueDataResponse = gitLabGraphQLCaller.
                     updateStatusLabel(token, projectFullPath, issueIid, currentStatusLabelIdNum, newStatusLabelIdNum);
 
-            log.info("Updated status: " + newStatusTitle + " of issue: " + issueId);
+            log.info("Updated status: {} of issue: {}", newStatusTitle, issueId);
             return util.makeIssueFromIssueNode(updateIssueDataResponse.getData().getUpdateIssue().getIssue());
         }
-        log.info("Failed to update status of issue: " + issueId);
+        log.info("Failed to update status of issue: {}", issueId);
         return util.makeIssueFromIssueNode(issueNode);
     }
 
@@ -356,14 +356,14 @@ public class DataManager {
         String projectFullPath = issueNode.getDesignCollection().getProject().getFullPath();
 
         String assigneeUsername = "";
-        if (!newAssigneeId.equals("unassigned") && !newAssigneeId.equals("")) {
+        if (!newAssigneeId.equals("unassigned") && !newAssigneeId.isEmpty()) {
             assigneeUsername = gitLabGraphQLCaller.getUserResponse(token, newAssigneeId)
                     .getData().getUser().getUsername();
         }
 
         IssueSetAssigneesDataResponse issueSetAssigneesDataResponse = gitLabGraphQLCaller.
                 updateAssignee(token, projectFullPath, issueIid, assigneeUsername);
-        log.info("Set assignee: " + assigneeUsername + " to issue: " + issueId);
+        log.info("Set assignee: {} to issue: {}", assigneeUsername, issueId);
         return util.makeIssueFromIssueNode(issueSetAssigneesDataResponse.getData().getIssueSetAssignees().getIssue());
     }
 

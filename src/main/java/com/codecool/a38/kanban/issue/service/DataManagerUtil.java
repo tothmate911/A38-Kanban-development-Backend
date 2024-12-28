@@ -76,7 +76,7 @@ public class DataManagerUtil {
 
     private User getAssigneeFromIssueNode(IssueNode issueNode) {
         try {
-            return issueNode.getAssignees().getNodes().get(0);
+            return issueNode.getAssignees().getNodes().getFirst();
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             return null;
         }
@@ -84,7 +84,7 @@ public class DataManagerUtil {
 
     public void putIssueToAssigneeIssueMap(Set<String> storyTitles, Map<User, List<Issue>> assigneeIssuesMap, Issue issue) {
         if (issue.getStatus() != null) {
-            if (storyTitles != null && storyTitles.size() != 0) {
+            if (storyTitles != null && !storyTitles.isEmpty()) {
                 if (issue.getStory() != null && storyTitles.contains(issue.getStory().getTitle())) {
                     addIssueToAssigneeIssuesMap(assigneeIssuesMap, issue);
                 }
@@ -105,7 +105,7 @@ public class DataManagerUtil {
     public void putIssueToStoryIssueMap(Set<String> storyTitles, Map<Label, List<Issue>> storyIssuesMap, Issue issue) {
         if (issue.getStatus() != null) {
             Label story = issue.getStory();
-            if (storyTitles != null && storyTitles.size() != 0) {
+            if (storyTitles != null && !storyTitles.isEmpty()) {
                 if (story != null && storyTitles.contains(story.getTitle())) {
                     addStoryToStoryIssuesMap(storyIssuesMap, issue, story);
                 }

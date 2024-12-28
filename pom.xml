@@ -5,8 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.4.1</version>
+        <relativePath/>
     </parent>
     <groupId>com.codecool.a38</groupId>
     <artifactId>kanban</artifactId>
@@ -15,7 +15,7 @@
     <description>A38 kanban project</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>23</java.version>
     </properties>
 
     <dependencies>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.36</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.9.0</version>
+            <version>2.11.0</version>
         </dependency>
 
     </dependencies>
@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.4.RELEASE</version>
+                <version>3.4.1</version>
             </plugin>
         </plugins>
     </build>

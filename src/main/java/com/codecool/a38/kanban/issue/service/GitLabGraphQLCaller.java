@@ -139,7 +139,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<SingleProjectDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), SingleProjectDataResponse.class);
-        log.info("Get single project issues response: " + projectFullPath);
+        log.info("Get single project issues response: {}", projectFullPath);
         return responseEntity.getBody();
     }
 
@@ -232,7 +232,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<SingleProjectDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), SingleProjectDataResponse.class);
-        log.info("Get single project milestones response: " + projectFullPath);
+        log.info("Get single project milestones response: {}", projectFullPath);
         return responseEntity.getBody();
     }
 
@@ -256,7 +256,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<SingleGroupDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), SingleGroupDataResponse.class);
-        log.info("Get single group milestones response: " + groupFullPath);
+        log.info("Get single group milestones response: {}", groupFullPath);
         return responseEntity.getBody();
     }
 
@@ -312,7 +312,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<SingleProjectDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), SingleProjectDataResponse.class);
-        log.info("Get single project stories response: " + projectFullPath);
+        log.info("Get single project stories response: {}", projectFullPath);
         return responseEntity.getBody();
     }
 
@@ -338,7 +338,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<IssueDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), IssueDataResponse.class);
-        log.info("Get issue data response: " + issueId);
+        log.info("Get issue data response: {}", issueId);
         return responseEntity.getBody();
     }
 
@@ -353,7 +353,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<SingleProjectDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), SingleProjectDataResponse.class);
-        log.info("Get label data response: " + labelTitle + " in project: " + projectPath);
+        log.info("Get label data response: {} in project: {}", labelTitle, projectPath);
         return responseEntity.getBody();
     }
 
@@ -396,7 +396,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<UpdateIssueDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), UpdateIssueDataResponse.class);
-        log.info("Update issue, return update issue data response: " + issueIid);
+        log.info("Update issue, return update issue data response: {}", issueIid);
         return responseEntity.getBody();
     }
 
@@ -411,7 +411,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<UserDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), UserDataResponse.class);
-        log.info("Get user data response: " + userId);
+        log.info("Get user data response: {}", userId);
         return responseEntity.getBody();
     }
 
@@ -452,7 +452,7 @@ public class GitLabGraphQLCaller {
 
         ResponseEntity<IssueSetAssigneesDataResponse> responseEntity = restTemplate.postForEntity(
                 util.getGraphQlApiUrl(), new HttpEntity<>(query, util.getHeaders(token)), IssueSetAssigneesDataResponse.class);
-        log.info("Set assignee to issue, return issue set assignee data response: " + projectPath);
+        log.info("Set assignee to issue, return issue set assignee data response: {}", projectPath);
         return responseEntity.getBody();
     }
 
