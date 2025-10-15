@@ -75,11 +75,8 @@ public class DataManagerUtil {
     }
 
     private User getAssigneeFromIssueNode(IssueNode issueNode) {
-        try {
-            return issueNode.getAssignees().getNodes().getFirst();
-        } catch (IndexOutOfBoundsException | NullPointerException e) {
-            return null;
-        }
+        List<User> assigneeNodes = issueNode.getAssignees().getNodes();
+        return assigneeNodes.isEmpty() ? null : assigneeNodes.getFirst();
     }
 
     public void putIssueToAssigneeIssueMap(Set<String> storyTitles, Map<User, List<Issue>> assigneeIssuesMap, Issue issue) {
