@@ -1,0 +1,12 @@
+package com.a38.kanban.authorization.model;
+
+import lombok.Data;
+
+@Data
+public class OAuthResponse {
+
+    private String access_token;
+
+    private Integer expires_in;
+
+}
