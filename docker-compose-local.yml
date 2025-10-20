@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: tothmate911/kanban-backend:latest
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile'
+    ports:
+      - '8080:8080'
+    environment:
+      - frontend.url=http://localhost:3000
+      - gitlabServer.url=https://gitlab.com
+  frontend:
+    image: tothmate911/kanban-frontend:latest
+    build:
+      context: '../A38-Kanban-development-Frontend'
+      dockerfile: 'Dockerfile'
+    ports:
+      - '3000:3000'
+    environment:
+      - REACT_APP_GITLAB_SERVER=https://gitlab.com
+      - REACT_APP_GITLAB_APP_ID=c04bee74901923d61dac82e59e01861637f9487fdefab1430e88a1a57e79c3ce
+      - REACT_APP_GITLAB_APP_SECRET=gloas-57080126ab5d94ab864a64967bcde389dd3f923a0435013c7dd8f35be27d4a09
+      - REACT_APP_APPLICATION=http://localhost:3000
+      - REACT_APP_SERVER=http://localhost:8080
