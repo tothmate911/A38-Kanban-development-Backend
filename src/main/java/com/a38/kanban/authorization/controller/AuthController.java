@@ -63,7 +63,6 @@ public class AuthController {
             int maxAge = oAuthResponse.getExpires_in() != null ? oAuthResponse.getExpires_in() : WEEK_IN_SECONDS;
             cookie.setMaxAge(maxAge);
 
-            cookie.setSecure(true);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             response.addCookie(cookie);
