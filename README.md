@@ -39,7 +39,7 @@ This is the frontend remote repository: https://github.com/tothmate911/A38-Kanba
 ## Usage
 
 For instant test usage of the application please go to the following page:
-https://a38-kanban.herokuapp.com
+http://34.139.217.62:3000
 
 After the auto-redirecting to Gitlab authentication platform give these credentials:
 
@@ -61,41 +61,41 @@ First you need to add a new application to GitLab. You may add the application t
 create an application here: https://gitlab.com/-/profile/applications
 
 - The Redirect URI should be this: <your_frontend_url>/getToken.  
-  (For example: https://a38-kanban.herokuapp.com/getToken)
+  (For example: https://34.139.217.62:3000/getToken)
 - The scopes of the application should be api.
 - After creating the application you should be able to see your Application ID and Secret, which you will need later.
 
 
 ##### A38-Kanban-development/docker-compose.yml
-Please find this file: A38-Kanban-development/docker-compose.yml.
-Set the appropriate parameters, as described the following section:
+Please find this file: A38-Kanban-development/docker-compose-local.yml.
+Please set your proper backend and frontend urls in the environment variables.
+You may delete a build sections from this file, in which case the images will not be build locally, but pulled form dockerhub.
 
 ```yaml
-version: '3'
 services:
   backend:
-    image: kanban-backend:latest
+    image: tothmate911/kanban-backend:latest
     build:
       context: '.'
       dockerfile: 'Dockerfile'
     ports:
       - '8080:8080'
     environment:
-      - frontend.url=http://localhost:3000    #This should be your frontend url
-      - gitlabServer.url=https://gitlab.com   #This should be your gitlab server url      
+      - frontend.url=http://localhost:3000
+      - gitlabServer.url=https://gitlab.com
   frontend:
-    image: kanban-frontend:latest
+    image: tothmate911/kanban-frontend:latest
     build:
       context: '../A38-Kanban-development-Frontend'
       dockerfile: 'Dockerfile'
     ports:
-      - '3000:3000'   #You can set the port here
+      - '3000:3000'
     environment:
-      - REACT_APP_GITLAB_SERVER=https://gitlab.com    #This should be your gitlab server url
-      - REACT_APP_GITLAB_APP_ID=458f27c6eb357cf7419231331e3af3e3a9d39782b7edf50ac2cc083e7a7f1a4a    #This should be your gitlab application id
-      - REACT_APP_GITLAB_APP_SECRET=f0fbf238c1ef5d0be56bf1118c430b15daff2b85d790d4bbfd76b8ccbb5bac33    #This should be your gitlab application secret
-      - REACT_APP_APPLICATION=http://localhost:3000   #This should be your frontend url
-    stdin_open: true
+      - REACT_APP_GITLAB_SERVER=https://gitlab.com
+      - REACT_APP_GITLAB_APP_ID=c04bee74901923d61dac82e59e01861637f9487fdefab1430e88a1a57e79c3ce
+      - REACT_APP_GITLAB_APP_SECRET=gloas-57080126ab5d94ab864a64967bcde389dd3f923a0435013c7dd8f35be27d4a09
+      - REACT_APP_APPLICATION=http://localhost:3000
+      - REACT_APP_SERVER=http://localhost:8080
 ```
 
 ##### A38-Kanban-development/src/main/resources/configprops.json
@@ -129,18 +129,15 @@ In this file set your predefined properties in a Json file.
 
 Prerequisites:
 
-- Freshly built jar file has to accessible under target/*.jar  
-  You can have it by running `mvn clean install`
-- Docker installed (https://docs.docker.com/engine/install/)
-- Docker-compose installed (https://docs.docker.com/compose/install/)
+- Docker and docker compose installed
 - Frontend has to accessible under A38-Kanban-development-Frontend/ and be on the same level with the current directory
+- (There is no need to have pre-built jars, the dockerfile in backend takes care of that.)
 
 If he above points are met:
 
-- Hit `docker-compose up --build` this will build the docker images from the specified  
-  docker files based on the `docker-compose.yml` and spin up the application stack.
+- Hit `docker compose -f docker-compose-local.yml up --build` this will build the docker images from the specified docker files based on the `docker-compose-local.yml` and spin up the application stack.
 - Visit `localhost:3000` (To change the host see the docker-compose.yml configuration)
 - The `--build` options forces a rebuild every time it is issued. If images are already build simply
-  hit `docker-compose up`
+  hit `docker compose -f docker-compose-local.yml up`
 
-If you want to run the docker compose process in the background just pass the `-d` option to docker-compose
+If you want to run the docker compose process in the background just pass the `-d` option to docker compose command.
